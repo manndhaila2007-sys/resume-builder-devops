@@ -50,6 +50,5 @@ jobs:
     steps:
     - name: Trigger Render Deployment
       run: |
-        # If you have a Render Deploy Hook, you can use it here as a secret
-        # curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
-        echo "Deployment is handled automatically by Render linked to GitHub or DockerHub!"
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+        echo "Deployment triggered on Render!"
