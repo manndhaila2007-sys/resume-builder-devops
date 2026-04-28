@@ -49,6 +49,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Trigger Render Deployment
+      env:
+        RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
       run: |
-        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
-        echo "Deployment triggered on Render!"
+        if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+          echo "Render deploy hook is not set. Skipping manual trigger."
+        else
+          curl -X POST "$RENDER_DEPLOY_HOOK"
+          echo "Deployment triggered on Render!"
+        fi
