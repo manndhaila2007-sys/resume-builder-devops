@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # Job 1: Install dependencies and run tests
+  
   build-and-test:
     runs-on: ubuntu-latest
     steps:
@@ -25,7 +25,7 @@ jobs:
     - name: Run Tests
       run: npm test
 
-  # Job 2: Build Docker image and push to Docker Hub (only on push to main)
+  
   docker-build-push:
     needs: build-and-test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -47,7 +47,7 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/resume-builder:latest
 
-  # Job 3: Deploy to Render (only on push to main)
+  
   deploy-to-render:
     needs: docker-build-push
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
