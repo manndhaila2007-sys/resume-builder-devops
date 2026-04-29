@@ -1,18 +1,121 @@
+:root {
+    --glass: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --primary: #6366f1;
+    --accent: #4f46e5;
+}
+
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f8fafc;
-    background-image: 
-        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-    background-attachment: fixed;
-    color: #1e293b;
+    /* High-quality professional workspace background */
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+                url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     padding: 20px;
     min-height: 100vh;
 }
 
-/* Modal Popup Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+.logo-text {
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 0;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.logo-text span {
+    color: var(--primary);
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+}
+
+/* Glassmorphism Card Style */
+.card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    padding: 30px;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    margin-bottom: 25px;
+}
+
+h2 { 
+    font-size: 1.1rem; 
+    margin-top: 0; 
+    color: #1e293b; 
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    background: white;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.btn-download {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+    transition: all 0.3s;
+}
+
+.btn-download:hover { 
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.5);
+}
+
+.resume-preview {
+    background: white;
+    padding: 50px;
+    border-radius: 4px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    min-height: 800px;
+}
+
+/* Modal Styling */
 .modal {
     display: none;
     position: fixed;
@@ -21,138 +124,34 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
 }
 
 .modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 30px;
-    border-radius: 16px;
-    width: 350px;
-    text-align: center;
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-    transform: translateY(-20px);
-    transition: transform 0.3s ease;
-}
-
-.modal-content.show {
-    transform: translateY(0);
-}
-
-.modal h2 { color: #4f46e5; }
-.btn-close {
-    background: #4f46e5;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.app-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.app-header h1 {
-    margin: 0;
-    color: #4f46e5;
-    font-size: 2.5rem;
-}
-
-.main-content {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 30px;
-}
-
-.card {
     background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-h2 { font-size: 1.2rem; margin-top: 0; color: #334155; }
-
-input, textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-family: inherit;
-    box-sizing: border-box;
-}
-
-textarea { height: 120px; resize: vertical; }
-
-.btn-download {
-    width: 100%;
-    padding: 15px;
-    background: #4f46e5;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.2s;
-}
-
-.btn-download:hover { background: #4338ca; }
-
-.resume-preview {
-    background: white;
+    margin: 10% auto;
     padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    min-height: 600px;
+    border-radius: 24px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.preview-header {
-    border-bottom: 2px solid #f1f5f9;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-}
-
-.preview-header h2 { font-size: 2rem; color: #4f46e5; margin: 0; }
-.preview-header h3 { font-size: 1.1rem; color: #64748b; margin: 5px 0; }
-.preview-header p { margin: 0; font-size: 0.9rem; color: #94a3b8; }
-
-.preview-body h4 {
-    text-transform: uppercase;
-    color: #4338ca;
-    letter-spacing: 0.5px;
-    border-bottom: 1px solid #f1f5f9;
-    margin: 25px 0 10px;
-}
-
-.skills-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.skill-pill {
-    background: #eef2ff;
-    color: #4f46e5;
-    padding: 4px 12px;
-    border-radius: 100px;
-    font-size: 0.8rem;
+.btn-close {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
 @media print {
-    .editor-section, .app-header { display: none; }
+    .editor-section, .app-header, .modal { display: none; }
     body { background: white; padding: 0; }
     .main-content { display: block; }
     .resume-preview { box-shadow: none; padding: 0; }
