@@ -7,35 +7,39 @@ on:
     branches: [ "main" ]
 
 jobs:
+  # Job 1: Install dependencies and run tests
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Use Node.js 18.x
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js 18
       uses: actions/setup-node@v4
       with:
         node-version: 18.x
+
     - name: Install dependencies
       run: npm install
-      
+
     - name: Run Tests
       run: npm test
 
+  # Job 2: Build Docker image and push to Docker Hub (only on push to main)
   docker-build-push:
     needs: build-and-test
-    # Only run this job if it's a push to main (not for PRs)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
       with:
@@ -43,6 +47,7 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/resume-builder:latest
 
+  # Job 3: Deploy to Render (only on push to main)
   deploy-to-render:
     needs: docker-build-push
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -53,7 +58,7 @@ jobs:
         RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
       run: |
         if [ -z "$RENDER_DEPLOY_HOOK" ]; then
-          echo "Render deploy hook is not set. Skipping manual trigger."
+          echo "No Render deploy hook set. Skipping."
         else
           curl -X POST "$RENDER_DEPLOY_HOOK"
           echo "Deployment triggered on Render!"
