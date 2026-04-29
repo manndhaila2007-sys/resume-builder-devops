@@ -7,15 +7,7 @@ function closeModal() {
 }
 
 function downloadPDF() {
-    // Show a quick "Preparing..." alert before printing
-    const btn = document.querySelector('.btn-download');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = "⏳ Preparing PDF...";
-    
-    setTimeout(() => {
-        window.print();
-        btn.innerHTML = originalText;
-    }, 500);
+    window.print();
 }
 
 function updatePreview() {
@@ -25,10 +17,10 @@ function updatePreview() {
     const exp = document.getElementById('expInput').value;
     const skills = document.getElementById('skillInput').value;
 
-    document.getElementById('prevName').textContent = name || "Your Name";
+    document.getElementById('prevName').textContent = name || "YOUR NAME";
     document.getElementById('prevJob').textContent = job || "Professional Title";
     document.getElementById('prevEmail').textContent = email || "email@example.com";
-    document.getElementById('prevExp').textContent = exp || "Details about your work experience will appear here...";
+    document.getElementById('prevExp').textContent = exp || "Details about your work experience will appear here as you type in the editor.";
 
     const skillsContainer = document.getElementById('prevSkills');
     skillsContainer.innerHTML = '';
@@ -36,10 +28,10 @@ function updatePreview() {
     if (skills) {
         skills.split(',').forEach(skill => {
             if (skill.trim()) {
-                const span = document.createElement('span');
-                span.className = 'skill-pill';
-                span.textContent = skill.trim();
-                skillsContainer.appendChild(span);
+                const div = document.createElement('div');
+                div.className = 'skill-item';
+                div.textContent = "• " + skill.trim();
+                skillsContainer.appendChild(div);
             }
         });
     }

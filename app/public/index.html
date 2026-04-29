@@ -3,57 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Resume Builder | DevOps Project</title>
+    <title>ResumePro | The Smarter Resume Builder</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Success Modal -->
-        <div id="welcomeModal" class="modal">
-            <div class="modal-content">
-                <h2>👋 Welcome!</h2>
-                <p>Start building your professional resume. Your changes are saved automatically.</p>
-                <button class="btn-close" onclick="closeModal()">Get Started</button>
-            </div>
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon">✨</div>
+            <h2>Ready to build?</h2>
+            <p>Create a job-winning resume in minutes with our professional builder.</p>
+            <button class="btn-primary" onclick="closeModal()">Build My Resume</button>
         </div>
+    </div>
 
-        <header class="app-header">
-            <h1 class="logo-text">RESUME<span>PRO</span></h1>
-        </header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">RESUME<span>PRO</span></div>
+            <div class="nav-links">
+                <span class="active">Editor</span>
+                <span>Templates</span>
+                <span>Settings</span>
+            </div>
+            <button class="btn-outline" onclick="downloadPDF()">Export PDF</button>
+        </div>
+    </nav>
 
-        <main class="main-content">
-            <section class="editor-section">
-                <div class="card">
-                    <h2>Personal Details</h2>
-                    <input type="text" id="nameInput" placeholder="Full Name" oninput="updatePreview()">
-                    <input type="text" id="jobInput" placeholder="Job Title" oninput="updatePreview()">
-                    <input type="email" id="emailInput" placeholder="Email Address" oninput="updatePreview()">
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="steps-indicator">
+                <div class="step active"><span>1</span> Personal</div>
+                <div class="step"><span>2</span> Experience</div>
+                <div class="step"><span>3</span> Skills</div>
+            </div>
+
+            <div class="editor-content">
+                <div class="section-card">
+                    <h3>Contact Information</h3>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="nameInput" placeholder="e.g. John Doe" oninput="updatePreview()">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Professional Title</label>
+                            <input type="text" id="jobInput" placeholder="e.g. Software Engineer" oninput="updatePreview()">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="emailInput" placeholder="john@example.com" oninput="updatePreview()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3>Experience & Summary</h3>
+                    <div class="form-group">
+                        <label>Professional Summary</label>
+                        <textarea id="expInput" placeholder="Describe your achievements..." oninput="updatePreview()"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3>Skills</h3>
+                    <div class="form-group">
+                        <label>Key Skills (comma separated)</label>
+                        <input type="text" id="skillInput" placeholder="e.g. React, Docker, Project Management" oninput="updatePreview()">
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="preview-area">
+            <div class="preview-toolbar">
+                <div class="live-status"><span class="pulse"></span> Live Preview</div>
+                <div class="zoom-controls">100%</div>
+            </div>
+            <div class="resume-container">
+                <div class="resume-paper" id="resumeContent">
+                    <div class="resume-header">
+                        <h1 id="prevName">YOUR NAME</h1>
+                        <h2 id="prevJob">Professional Title</h2>
+                        <div class="contact-info">
+                            <span id="prevEmail">email@example.com</span>
+                        </div>
+                    </div>
                     
-                    <h2>Experience & Skills</h2>
-                    <textarea id="expInput" placeholder="Work Experience..." oninput="updatePreview()"></textarea>
-                    <input type="text" id="skillInput" placeholder="Skills (comma separated)" oninput="updatePreview()">
-                </div>
-                <button class="btn-download" onclick="downloadPDF()">🖨️ Download as PDF</button>
-            </section>
-
-            <section class="preview-section">
-                <div class="resume-preview" id="resumeContent">
-                    <div class="preview-header">
-                        <h2 id="prevName">Your Name</h2>
-                        <h3 id="prevJob">Professional Title</h3>
-                        <p id="prevEmail">email@example.com</p>
-                    </div>
-                    <div class="preview-body">
-                        <h4>Experience</h4>
-                        <p id="prevExp">Details about your work experience will appear here...</p>
-                        <h4>Skills</h4>
-                        <div id="prevSkills" class="skills-container"></div>
+                    <div class="resume-main">
+                        <div class="resume-section">
+                            <div class="section-title">Summary</div>
+                            <p id="prevExp">Details about your work experience will appear here as you type in the editor.</p>
+                        </div>
+                        
+                        <div class="resume-section">
+                            <div class="section-title">Core Skills</div>
+                            <div id="prevSkills" class="skills-grid"></div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
