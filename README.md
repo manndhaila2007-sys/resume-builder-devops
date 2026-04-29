@@ -2,7 +2,24 @@
 
 **Student:** Mann Dhaila | **Subject:** DevOps | **Semester:** 1
 
-A simple Node.js web application that demonstrates a complete **DevOps pipeline** — from code push to automatic deployment.
+A professional Node.js web application that demonstrates a complete **DevOps pipeline** — from code push to automatic deployment, following the strict project guidelines.
+
+---
+
+## 🏛️ System Architecture
+
+The project follows a standard CI/CD architectural flow. Below is the visualization of the pipeline:
+
+```mermaid
+graph LR
+    A[Developer] -->|Git Push| B[GitHub]
+    B -->|Actions| C[Build & Test]
+    C -->|Docker| D[Docker Hub]
+    D -->|Webhook| E[Render Cloud]
+    E -->|Live| F[Users]
+```
+
+> Detailed architecture description can be found in [docs/architecture.md](./docs/architecture.md).
 
 ---
 
@@ -20,162 +37,71 @@ A simple Node.js web application that demonstrates a complete **DevOps pipeline*
 
 ---
 
-## 🔄 CI/CD Pipeline
+## 🔄 CI/CD Pipeline Flow
 
-The CI/CD pipeline is defined in `.github/workflows/ci-cd.yml` and runs automatically on every `git push`.
-
-### Pipeline Flow
-
-```
-Developer pushes code
-        ↓
-GitHub Actions triggers automatically
-        ↓
-Job 1: BUILD & TEST
-  - Install Node.js 18
-  - Run npm install
-  - Run automated Jest tests
-        ↓ (only if tests pass)
-Job 2: DOCKER BUILD & PUSH
-  - Build Docker image
-  - Push to Docker Hub
-        ↓
-Job 3: DEPLOY
-  - Trigger Render deployment
-  - App goes live automatically
-```
-
-### Workflow File (`.github/workflows/ci-cd.yml`)
-
-```yaml
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: [ "main" ]         # Triggers on every push to main
-  pull_request:
-    branches: [ "main" ]         # Triggers on every pull request
-
-jobs:
-  build-and-test:               # Job 1: Build & Test
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18.x
-    - run: npm install
-    - run: npm test              # Runs automated tests
-
-  docker-build-push:            # Job 2: Docker
-    needs: build-and-test       # Only runs if Job 1 passes
-    if: github.event_name == 'push'
-    ...
-
-  deploy-to-render:             # Job 3: Deploy
-    needs: docker-build-push    # Only runs if Job 2 passes
-    ...
-```
+1. **SCM**: Code is pushed to a feature branch.
+2. **PR**: A Pull Request is opened to merge into `main`.
+3. **Build & Test**: GitHub Actions automatically runs `npm install` and `npm test`.
+4. **Dockerization**: If tests pass, a Docker image is built and pushed to Docker Hub.
+5. **Deployment**: Render detects the new image and deploys it automatically.
 
 ---
 
-## 🌿 Git Branching Strategy (Multi-developer Workflow)
+## 📸 Screenshots
 
-```
-main branch (production)
-    │
-    ├── feature/update-readme    ← Feature branch (developed separately)
-    │       │
-    │       └──── Pull Request #1 ──→ merged into main
-    │
-    └── main (updated after PR merge)
-```
+### 1. Automated Testing Success
+![Testing Success](https://via.placeholder.com/800x400?text=GitHub+Actions+Testing+Success+Screenshot)
+*Screenshot showing all Jest tests passing in the CI pipeline.*
 
-**Workflow followed:**
-1. Create a feature branch: `git checkout -b feature/update-readme`
-2. Make changes and commit: `git commit -m "feat: update readme"`
-3. Push branch: `git push origin feature/update-readme`
-4. Open Pull Request on GitHub → review → merge into `main`
-5. GitHub Actions automatically runs pipeline on merge
+### 2. CI/CD Pipeline Complete
+![Pipeline Success](https://via.placeholder.com/800x400?text=Full+CI/CD+Pipeline+Success+Screenshot)
+*Screenshot showing all stages (Build, Docker, Deploy) marked green.*
+
+### 3. Live Application on Render
+![Live Deployment](https://via.placeholder.com/800x400?text=Live+Application+on+Render+Screenshot)
+*Screenshot of the application running successfully on the Render cloud platform.*
 
 ---
 
-## 🧪 Automated Testing
+## 🧠 Challenges Faced
 
-Tests are in `test/server.test.js` and run automatically in the pipeline:
+During the implementation of this DevOps pipeline, several challenges were encountered and resolved:
 
-```javascript
-// Test 1: Health check
-it('GET /api/health should return 200 OK', ...)
-
-// Test 2: Home page loads
-it('GET / should serve the home page', ...)
-```
-
-Run tests manually:
-```bash
-npm test
-```
-
----
-
-## 🐳 Docker (Containerization)
-
-The app is packaged into a Docker container for consistent deployment.
-
-**Build and run locally:**
-```bash
-# Build the Docker image
-docker build -t devops-demo-app .
-
-# Run the container
-docker run -p 3000:3000 devops-demo-app
-```
-
-Open browser: `http://localhost:3000`
-
----
-
-## 🔒 Secrets Management
-
-No passwords are stored in the code. All credentials are stored as **GitHub Secrets**:
-
-| Secret Name | Purpose |
-|-------------|---------|
-| `DOCKER_USERNAME` | Docker Hub login |
-| `DOCKER_PASSWORD` | Docker Hub password |
-| `RENDER_DEPLOY_HOOK` | Render deployment webhook URL |
-
-Set these at: `GitHub Repo → Settings → Secrets and variables → Actions`
-
----
-
-## 🚀 Live Deployment
-
-👉 **[View Live App on Render](https://resume-builder-devops.onrender.com)**
+1. **GitHub Secrets Configuration**: Initially, the workflow failed because the `RENDER_DEPLOY_HOOK` was not set. This was resolved by implementing a conditional check in the YAML file to ensure the script only runs when the secret is available.
+2. **Dockerization Pathing**: Moving the application code into the `app/` folder required updating the `Dockerfile` and `package.json` to ensure the container could still locate the entry point.
+3. **CI/CD Optimization**: Updating from deprecated GitHub Actions (v3 to v4/v6) to ensure the pipeline remains stable and uses the latest security patches.
+4. **Environment Consistency**: Ensuring the application runs identically in the local development environment, the GitHub Actions runner, and the production Docker container.
 
 ---
 
 ## 📁 Project Structure
 
+Following the required project organization:
+
 ```
-devops-project/
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml       ← CI/CD Pipeline definition
-├── public/
-│   └── index.html          ← Simple web page
-├── test/
-│   └── server.test.js      ← Automated tests (Jest)
-├── server.js               ← Node.js Express server
-├── package.json            ← Project dependencies
-└── Dockerfile              ← Docker container definition
+resume-builder-devops/
+├── app/                    # Application source code
+│   ├── public/             # Frontend assets
+│   └── server.js           # Express server
+├── .github/                # CI/CD workflow definitions
+├── scripts/                # Automation & deployment scripts
+│   └── deploy.sh
+├── docs/                   # Documentation & diagrams
+│   └── architecture.md
+├── test/                   # Automated test cases
+├── Dockerfile              # Container configuration
+├── package.json            # Dependencies & scripts
+└── README.md               # Main project documentation
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Live Deployment
+👉 **[View Live App on Render](https://resume-builder-devops.onrender.com)**
 
+---
+
+## 🛠️ Tech Stack
 - **Runtime:** Node.js 18
 - **Framework:** Express.js
 - **Testing:** Jest + Supertest

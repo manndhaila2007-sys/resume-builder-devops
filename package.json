@@ -2,9 +2,9 @@
   "name": "resume-builder-devops",
   "version": "1.0.0",
   "description": "DevOps college project - Resume Builder",
-  "main": "server.js",
+  "main": "app/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node app/server.js",
     "test": "jest"
   },
   "dependencies": {

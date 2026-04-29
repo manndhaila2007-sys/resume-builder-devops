@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../server');
+const app = require('../app/server');
 
 // Automated Test Suite - runs automatically in CI/CD pipeline
 describe('App API Tests', () => {
