@@ -1,16 +1,21 @@
 const request = require('supertest');
 const app = require('../server');
 
-describe('Server API Tests', () => {
-  it('should return 200 OK on /api/health', async () => {
+// Automated Test Suite - runs automatically in CI/CD pipeline
+describe('App API Tests', () => {
+
+  // Test 1: Health check endpoint
+  it('GET /api/health should return 200 OK', async () => {
     const response = await request(app).get('/api/health');
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('status', 'OK');
   });
 
-  it('should serve the index.html on root /', async () => {
+  // Test 2: Home page loads
+  it('GET / should serve the home page', async () => {
     const response = await request(app).get('/');
     expect(response.statusCode).toBe(200);
-    expect(response.text).toContain('Resume Builder Pro');
+    expect(response.text).toContain('DevOps Demo App');
   });
+
 });
