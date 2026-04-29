@@ -1,0 +1,113 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.app-header h1 {
+    margin: 0;
+    color: #4f46e5;
+    font-size: 2.5rem;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+h2 { font-size: 1.2rem; margin-top: 0; color: #334155; }
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+textarea { height: 120px; resize: vertical; }
+
+.btn-download {
+    width: 100%;
+    padding: 15px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.btn-download:hover { background: #4338ca; }
+
+.resume-preview {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    min-height: 600px;
+}
+
+.preview-header {
+    border-bottom: 2px solid #f1f5f9;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+}
+
+.preview-header h2 { font-size: 2rem; color: #4f46e5; margin: 0; }
+.preview-header h3 { font-size: 1.1rem; color: #64748b; margin: 5px 0; }
+.preview-header p { margin: 0; font-size: 0.9rem; color: #94a3b8; }
+
+.preview-body h4 {
+    text-transform: uppercase;
+    color: #4338ca;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #f1f5f9;
+    margin: 25px 0 10px;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-pill {
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+}
+
+@media print {
+    .editor-section, .app-header { display: none; }
+    body { background: white; padding: 0; }
+    .main-content { display: block; }
+    .resume-preview { box-shadow: none; padding: 0; }
+}

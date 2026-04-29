@@ -25,8 +25,8 @@ graph LR
 
 ## ✅ DevOps Concepts Implemented
 
-| Concept | Tool Used | Status |
-|---------|-----------|--------|
+| Interactive UI | Real-time Preview | ✅ Done |
+| PDF Export | Browser Print (PDF) | ✅ Done |
 | Source Code Management (SCM) | GitHub | ✅ Done |
 | Branching Strategy | Feature Branches + PR | ✅ Done |
 | CI/CD Pipeline | GitHub Actions | ✅ Done |
