@@ -1,3 +1,23 @@
+window.onload = function() {
+    document.getElementById('welcomeModal').style.display = 'block';
+};
+
+function closeModal() {
+    document.getElementById('welcomeModal').style.display = 'none';
+}
+
+function downloadPDF() {
+    // Show a quick "Preparing..." alert before printing
+    const btn = document.querySelector('.btn-download');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "⏳ Preparing PDF...";
+    
+    setTimeout(() => {
+        window.print();
+        btn.innerHTML = originalText;
+    }, 500);
+}
+
 function updatePreview() {
     const name = document.getElementById('nameInput').value;
     const job = document.getElementById('jobInput').value;

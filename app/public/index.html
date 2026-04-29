@@ -9,9 +9,18 @@
 </head>
 <body>
     <div class="container">
+        <!-- Success Modal -->
+        <div id="welcomeModal" class="modal">
+            <div class="modal-content">
+                <h2>👋 Welcome!</h2>
+                <p>Start building your professional resume. Your changes are saved automatically.</p>
+                <button class="btn-close" onclick="closeModal()">Get Started</button>
+            </div>
+        </div>
+
         <header class="app-header">
-            <h1>🚀 Resume Pro</h1>
-            <p>DevOps demo application with real-time editing</p>
+            <h1 style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🚀 Resume Pro</h1>
+            <p style="color: #cbd5e1;">DevOps demo application with real-time editing</p>
         </header>
 
         <main class="main-content">
@@ -26,7 +35,7 @@
                     <textarea id="expInput" placeholder="Work Experience..." oninput="updatePreview()"></textarea>
                     <input type="text" id="skillInput" placeholder="Skills (comma separated)" oninput="updatePreview()">
                 </div>
-                <button class="btn-download" onclick="window.print()">🖨️ Download as PDF</button>
+                <button class="btn-download" onclick="downloadPDF()">🖨️ Download as PDF</button>
             </section>
 
             <section class="preview-section">
